@@ -150,7 +150,7 @@ QueryRapper.prototype = {
         val = "'" + this.escapeString(val) + "'";
         break;
       case 'boolean':
-        val = val ? 'TRUE' : 'FALSE';
+        val = val ? 1 : 0;
         break;
       case 'number':
         // Do nothing
