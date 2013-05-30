@@ -4,7 +4,7 @@ function QueryRapper(whereOpts) {
   this.whereOpts = whereOpts || {};
   this.whereClauses = [];
   this.orderBys = [];
-  this.values = {};
+  this.dataValues = {};
 }
 
 QueryRapper.prototype = {
@@ -51,7 +51,7 @@ QueryRapper.prototype = {
     this.whereOpts = {};
     this.whereClauses = [];
     this.orderBys = [];
-    this.values = {};
+    this.dataValues = {};
     return this;
   },
 
@@ -72,6 +72,11 @@ QueryRapper.prototype = {
 
   selectFrom : function(tableName, opts) {
     this.selectFroms.push(new QueryRapper.SelectFrom(tableName, opts));
+    return this;
+  },
+
+  values: function(values) {
+    this.dataValues = values || {};
     return this;
   },
 
@@ -106,17 +111,17 @@ QueryRapper.prototype = {
 
   generateValuesClause : function() {
     var v, keys = [], vals = [];
-    for (v in this.values) {
+    for (v in this.dataValues) {
       keys.push(this.quoteName(v));
-      vals.push(this.formatVal(this.values[v]));
+      vals.push(this.formatVal(this.dataValues[v]));
     }
     return ' ( ' + keys.join(', ') + ' ) VALUES ( ' + vals.join(', ') + ' )';
   },
 
   generateSetClause : function() {
     var v, vals = [];
-    for ( v in this.values ) {
-      vals.push( this.quoteName(v) + ' = ' + this.formatVal(this.values[v]) );
+    for ( v in this.dataValues ) {
+      vals.push( this.quoteName(v) + ' = ' + this.formatVal(this.dataValues[v]) );
     }
     return ' SET ' + vals.join(', ');
   },

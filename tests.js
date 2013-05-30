@@ -1,6 +1,6 @@
 test('values test', function() {
-  var qw = new QueryRapper();
-  qw.values = { col1: 'asdf', col2: 1234, col3: 'asdf2' };
+  var qw = new QueryRapper()
+    .values({ col1: 'asdf', col2: 1234, col3: 'asdf2' });
   ok(qw.generateValuesClause() == ' ( "col1", "col2", "col3" ) VALUES ( \'asdf\', 1234, \'asdf2\' )');
 });
 
@@ -36,8 +36,9 @@ test('select tests', function() {
 });
 
 test('update test', function() {
-  var qw = new QueryRapper({col1: 'asdf'}).tableName('table_name');
-  qw.values = { col2: 'fdsa', col3: 18 };
+  var qw = new QueryRapper({col1: 'asdf'})
+      .tableName('table_name')
+      .values({ col2: 'fdsa', col3: 18 });
   ok(qw.updateQuery() == 'UPDATE "table_name" SET "col2" = \'fdsa\', "col3" = 18 WHERE ( "col1" = \'asdf\' );');
 });
 
@@ -47,7 +48,8 @@ test('delete test', function() {
 });
 
 test('insert test', function() {
-  var qw = new QueryRapper().tableName('table_name');
-  qw.values = { col1: 'asdf', col2: 25 };
+  var qw = new QueryRapper()
+    .tableName('table_name')
+    .values({ col1: 'asdf', col2: 25 });
   ok(qw.insertQuery() == 'INSERT INTO "table_name" ( "col1", "col2" ) VALUES ( \'asdf\', 25 );');
 });
