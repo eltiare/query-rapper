@@ -197,7 +197,7 @@ QueryRapper.prototype = {
       }
       arr.push(k + ' ' + op + ' ' + this.formatVal(this.whereOpts[o]));
     }
-    return '( ' + arr.join(' AND ') + ' )';
+    return arr.length == 0 ? '' : '( ' + arr.join(' AND ') + ' )';
   }
 }
 
